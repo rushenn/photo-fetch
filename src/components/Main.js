@@ -10,11 +10,11 @@ class AppComponent extends React.Component {
     super(props)
 
     var minioClient = new Minio.Client({
-      endPoint: 'play.minio.io',
+      endPoint: '147.75.201.195',
       port: 9000,
-      secure: true,
-      accessKey: 'Q3AM3UQ867SPQQA43P2F',
-      secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+      secure: false,
+      accessKey: 'minio',
+      secretKey: 'minio123'
     });
 
     this.state = {
@@ -27,8 +27,9 @@ class AppComponent extends React.Component {
     this.state.poller = this.state.minioClient.listenBucketNotification('alice', '', '', ['s3:ObjectCreated:*'])
 
     this.state.poller.on('notification', record => {
+      let newFile = record.s3.object.key.toLowerCase()
+      console.log(newFile)
       if (imgextensions.filter(ext => {
-	let newFile = record.s3.object.key.toLowerCase()
 	if (newFile.endsWith(ext)) return true
 	return false
       }).length === 0) return
