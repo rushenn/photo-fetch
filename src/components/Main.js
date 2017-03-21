@@ -3,6 +3,7 @@ require('styles/App.css');
 
 import React from 'react';
 
+let imgextensions = ["ani","bmp","cal","fax","gif","img","jbg","jpe","jpeg","jpg","mac","pbm","pcd","pcx","pct","pgm","png","ppm","psd","ras","tga","tiff","wmf"]
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -20,11 +21,17 @@ class AppComponent extends React.Component {
       img: "http://www.kikiaolaconstruction.com/pics/rt65s.jpg",
       minioClient: minioClient
     }
+
   }
   componentDidMount() {
-    this.state.poller = this.state.minioClient.listenBucketNotification('alice', '', '.jpg', ['s3:ObjectCreated:*'])
+    this.state.poller = this.state.minioClient.listenBucketNotification('alice', '', '', ['s3:ObjectCreated:*'])
 
     this.state.poller.on('notification', record => {
+      if (imgextensions.filter(ext => {
+	let newFile = record.s3.object.key.toLowerCase()
+	if (newFile.endsWith(ext)) return true
+	return false
+      }).length === 0) return
       this.setState({
 	img: `https://play.minio.io:9000/${record.s3.bucket.name}/${record.s3.object.key}`
       })
