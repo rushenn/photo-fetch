@@ -34,7 +34,7 @@ class AppComponent extends React.Component {
 	return false
       }).length === 0) return
       this.setState({
-	img: `https://play.minio.io:9000/${record.s3.bucket.name}/${record.s3.object.key}`
+	img: `http://147.75.201.195:9000/${record.s3.bucket.name}/${newFile}`
       })
       console.log(record)
     })
