@@ -22,7 +22,7 @@ class AppComponent extends React.Component {
     }
   }
   componentDidMount() {
-    this.state.poller = this.state.minioClient.listenBucketNotification('test', 'photos/', '.jpg', ['s3:ObjectCreated:*'])
+    this.state.poller = this.state.minioClient.listenBucketNotification('alice', '', '.jpg', ['s3:ObjectCreated:*'])
 
     this.state.poller.on('notification', record => {
       this.setState({
