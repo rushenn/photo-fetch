@@ -42,7 +42,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className="index">
-        <img src={this.state.img} alt="Yeoman Generator" />
+        <img className="animated fadeInUp" src={this.state.img} alt="Yeoman Generator" />
       </div>
     );
   }
